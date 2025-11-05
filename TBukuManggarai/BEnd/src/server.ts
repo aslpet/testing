@@ -161,3 +161,8 @@ app.get('/api/books/:id', (req: Request, res: Response) => {
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+app.use(cors({
+  origin: 'http://localhost:5173', // URL frontend Vite
+  credentials: true
+}));
