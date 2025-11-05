@@ -1,8 +1,8 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
-import { BookOpen, LogOut, User, Search, ShoppingCart, Star } from 'lucide-react';
+import { BookOpen, LogOut, User as UserIcon, Search, ShoppingCart, Star } from 'lucide-react';
 
 // Types
-interface User {
+interface UserType {
   id: string;
   name: string;
   email: string;
@@ -18,7 +18,7 @@ interface Book {
 }
 
 interface AuthContextType {
-  user: User | null;
+  user: UserType | null;
   token: string | null;
   login: (email: string, password: string) => Promise<void>;
   register: (name: string, email: string, password: string) => Promise<void>;
@@ -36,7 +36,7 @@ const useAuth = () => {
 
 // Auth Provider
 const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserType | null>(null);
   const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
@@ -216,7 +216,7 @@ const Register: React.FC<{ onSwitchToLogin: () => void }> = ({ onSwitchToLogin }
       <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md">
         <div className="flex justify-center mb-6">
           <div className="bg-purple-600 p-3 rounded-full">
-            <User className="w-8 h-8 text-white" />
+            <UserIcon className="w-8 h-8 text-white" />
           </div>
         </div>
         
@@ -305,7 +305,7 @@ const BookCard: React.FC<{ book: Book; onClick: () => void }> = ({ book, onClick
         />
       </div>
       <div className="p-4">
-        <h3 className="font-bold text-lg text-gray-800 mb-1 line-clamp-1">{book.title}</h3>
+        <h3 className="font-bold text-lg text-gray-800 mb-1 truncate">{book.title}</h3>
         <p className="text-sm text-gray-600 mb-2">{book.author}</p>
         <div className="flex items-center justify-between">
           <span className="text-xs text-gray-500">{book.year}</span>
@@ -388,7 +388,6 @@ const Bookstore: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
       <header className="bg-white shadow-sm sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
@@ -404,7 +403,7 @@ const Bookstore: React.FC = () => {
             
             <div className="flex items-center gap-4">
               <div className="hidden md:flex items-center gap-2 text-gray-700">
-                <User className="w-5 h-5" />
+                <UserIcon className="w-5 h-5" />
                 <span className="font-medium">{user?.name}</span>
               </div>
               <button
@@ -417,7 +416,6 @@ const Bookstore: React.FC = () => {
             </div>
           </div>
           
-          {/* Search Bar */}
           <div className="mt-4 relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
             <input
@@ -431,7 +429,6 @@ const Bookstore: React.FC = () => {
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 py-8">
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-gray-800 mb-2">Featured Books</h2>
@@ -461,7 +458,6 @@ const Bookstore: React.FC = () => {
         )}
       </main>
 
-      {/* Book Detail Modal */}
       {selectedBook && (
         <BookDetail book={selectedBook} onClose={() => setSelectedBook(null)} />
       )}
